@@ -2,19 +2,47 @@
 import Link from "next/link";
 import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
+import MUICard from '@mui/material/Card';
+import Image from "next/image";
+import { CardHeader } from "@mui/material";
 
 const recommendations = [
 	{
-		title: "From Dinesh Bhati",
+		title: "From Adobe",
+		name: "Dinesh Bhati",
 		description: "",
-		link: "#recommendation1-link",
+		link: "#dinesh",
+		src: '/dinesh.png',
+		role: 'Engineering Manager IV at Adobe',
+		relation: "Manager",
+		date: 'September 13, 2023',
+		company: 'Adobe'
 	},
 	{
-		title: "From Sri Dutta bandreddi",
-		description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-		link: "#recommendation2-link",
+		title: "From Byju's",
+		name: "Sri Datta Bandreddi",
+		description: "",
+		link: "#datta",
+		src: '/datta.png',
+		role: 'Software Engineer at Byjus',
+		relation: "Mentor",
+		date: 'May 30, 2023',
+		company: "Byju's"
 	},
 ];
+
+const titleStyles = {
+	fontSize: '1rem',
+	transitionDuration: '1000ms',
+	color: 'rgb(228 228 231)',
+};
+
+const subheaderStyles = {
+	fontSize: '.8rem',
+	transitionDuration: '1000ms',
+	color: 'rgb(228 228 231)',
+};
+
 
 export default function RecommendationPage() {
 	return (
@@ -24,23 +52,60 @@ export default function RecommendationPage() {
 				<div className="grid w-full grid-cols-1 gap-8 mx-auto mt-32 sm:mt-0 sm:grid-cols-2 lg:gap-16">
 					{recommendations.map((recommendation, index) => (
 						<Card key={index}>
-							<Link
-								href={recommendation.link}
-								className="p-4 relative flex flex-col items-center gap-4 duration-700 group md:gap-8 md:py-24  lg:pb-48  md:p-16"
-							>
-								<span
-									className="absolute w-px h-2/3 bg-gradient-to-b from-zinc-500 via-zinc-500/50 to-transparent"
-									aria-hidden="true"
-								/>
+							<div className="p-4 relative flex flex-col items-center gap-4 duration-700 group md:gap-8 md:py-24  lg:pb-48  md:p-16">
 								<div className="z-10 flex flex-col items-center">
 									<span className="text-xl font-medium duration-150 lg:text-3xl text-zinc-200 group-hover:text-white font-display">
 										{recommendation.title}
 									</span>
-									<span className="mt-4 text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
-										{recommendation.description}
-									</span>
 								</div>
-							</Link>
+								<MUICard className='bg-[#18181b00] border border-[#000000]'>
+									<CardHeader
+										avatar={
+											<Image
+												src={recommendation.src}
+												alt="Profile"
+												width={50} // Set the desired width
+												height={50} // Set the desired height
+												style={{ borderRadius: '50px' }}
+											/>
+										}
+										titleTypographyProps={titleStyles}
+										subheaderTypographyProps={subheaderStyles}
+										title={`${recommendation.name}`}
+										subheader={recommendation.role}
+									/>
+								</MUICard>
+
+								{/* <span className="mt-4 text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
+									{recommendation.name} is {recommendation.role}
+								</span>
+								<span className="text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
+									He was my {recommendation.relation} during my time at {recommendation.company}
+								</span> */}
+
+
+
+								<Link
+									target="_blank"
+									key={recommendation.name}
+									href={recommendation.link}
+									className="text-[24px] text-zinc-200 inline-block relative transition-transform hover:translate-x-1"
+								>
+									View{" "}
+									<span
+										aria-hidden="true"
+										className=""
+										// style={{
+										// 	transition: "transform 0.3s ease-in-out",
+										// 	transform: "translateX(0)"
+										// }}
+									>
+										&rarr;
+									</span>
+								</Link>
+
+
+							</div>
 						</Card>
 					))}
 				</div>
