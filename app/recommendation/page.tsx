@@ -12,7 +12,7 @@ const recommendations = [
 		title: "From Adobe",
 		name: "Dinesh Bhati",
 		description: "",
-		link: "#dinesh",
+		link: "recommendation/dinesh",
 		src: '/dinesh.png',
 		role: 'Engineering Manager IV at Adobe',
 		relation: "Manager",
@@ -23,7 +23,7 @@ const recommendations = [
 		title: "From Byju's",
 		name: "Sri Datta Bandreddi",
 		description: "",
-		link: "#datta",
+		link: "recommendation/datta",
 		src: '/datta.png',
 		role: 'Software Engineer at Byjus',
 		relation: "Mentor",
@@ -46,9 +46,9 @@ const subheaderStyles = {
 
 const darkTheme = createTheme({
 	palette: {
-	  mode: 'dark', // Enable dark mode
+		mode: 'dark', // Enable dark mode
 	},
-  });  
+});
 
 
 export default function RecommendationPage() {
@@ -66,34 +66,24 @@ export default function RecommendationPage() {
 									</span>
 								</div>
 								<ThemeProvider theme={darkTheme}>
-								<MUICard className='bg-[#18181b00] border border-[#000000]'>
-									<CardHeader
-										avatar={
-											<Image
-												src={recommendation.src}
-												alt="Profile"
-												width={50} // Set the desired width
-												height={50} // Set the desired height
-												style={{ borderRadius: '50px' }}
-											/>
-										}
-										titleTypographyProps={titleStyles}
-										subheaderTypographyProps={subheaderStyles}
-										title={`${recommendation.name}`}
-										subheader={recommendation.role}
-									/>
-								</MUICard>
+									<MUICard className='bg-[#18181b00] border border-[#000000]'>
+										<CardHeader
+											avatar={
+												<Image
+													src={recommendation.src}
+													alt="Profile"
+													width={50} // Set the desired width
+													height={50} // Set the desired height
+													style={{ borderRadius: '50px' }}
+												/>
+											}
+											titleTypographyProps={titleStyles}
+											subheaderTypographyProps={subheaderStyles}
+											title={`${recommendation.name}`}
+											subheader={recommendation.role}
+										/>
+									</MUICard>
 								</ThemeProvider>
-
-								{/* <span className="mt-4 text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
-									{recommendation.name} is {recommendation.role}
-								</span>
-								<span className="text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
-									He was my {recommendation.relation} during my time at {recommendation.company}
-								</span> */}
-
-
-
 								<Link
 									target="_blank"
 									key={recommendation.name}
@@ -101,19 +91,8 @@ export default function RecommendationPage() {
 									className="text-[24px] text-zinc-200 inline-block relative transition-transform hover:translate-x-1"
 								>
 									View{" "}
-									<span
-										aria-hidden="true"
-										className=""
-										// style={{
-										// 	transition: "transform 0.3s ease-in-out",
-										// 	transform: "translateX(0)"
-										// }}
-									>
-										&rarr;
-									</span>
+									<span aria-hidden="true" className="">&rarr;</span>
 								</Link>
-
-
 							</div>
 						</Card>
 					))}
