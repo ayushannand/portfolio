@@ -5,6 +5,7 @@ import { Card } from "../components/card";
 import MUICard from '@mui/material/Card';
 import Image from "next/image";
 import { CardHeader } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const recommendations = [
 	{
@@ -43,6 +44,12 @@ const subheaderStyles = {
 	color: 'rgb(228 228 231)',
 };
 
+const darkTheme = createTheme({
+	palette: {
+	  mode: 'dark', // Enable dark mode
+	},
+  });  
+
 
 export default function RecommendationPage() {
 	return (
@@ -58,6 +65,7 @@ export default function RecommendationPage() {
 										{recommendation.title}
 									</span>
 								</div>
+								<ThemeProvider theme={darkTheme}>
 								<MUICard className='bg-[#18181b00] border border-[#000000]'>
 									<CardHeader
 										avatar={
@@ -75,6 +83,7 @@ export default function RecommendationPage() {
 										subheader={recommendation.role}
 									/>
 								</MUICard>
+								</ThemeProvider>
 
 								{/* <span className="mt-4 text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
 									{recommendation.name} is {recommendation.role}
