@@ -12,7 +12,7 @@ const recommendations = [
 		title: "From Adobe",
 		name: "Dinesh Bhati",
 		description: "",
-		link: "recommendation/dinesh",
+		link: "https://www.linkedin.com/in/ayushannand/#recommendations",
 		src: '/dinesh.png',
 		role: 'Engineering Manager IV at Adobe',
 		relation: "Manager",
@@ -23,7 +23,7 @@ const recommendations = [
 		title: "From Byju's",
 		name: "Sri Datta Bandreddi",
 		description: "",
-		link: "recommendation/datta",
+		link: "https://www.linkedin.com/in/ayushannand/#recommendations",
 		src: '/datta.png',
 		role: 'Software Engineer at Byjus',
 		relation: "Mentor",
@@ -90,7 +90,7 @@ export default function RecommendationPage() {
 									href={recommendation.link}
 									className="text-[24px] text-zinc-200 inline-block relative transition-transform hover:translate-x-1"
 								>
-									View{" "}
+									View on LinkedIn{" "}
 									<span aria-hidden="true" className="">&rarr;</span>
 								</Link>
 							</div>
