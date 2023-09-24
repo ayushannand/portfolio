@@ -42,6 +42,26 @@ export const Project = defineDocumentType(() => ({
 		repository: {
 			type: "string",
 		},
+		figma:{
+			type:"string",
+		}
+	},
+	computedFields,
+}));
+
+export const Skill = defineDocumentType(() => ({
+	name: "Skill",
+	filePathPattern: "./skills/**/*.mdx",
+	contentType: "mdx",
+
+	fields: {
+		title: {
+			type: "string",
+			required: true,
+		},
+		description: {
+			type: "string",
+		},
 	},
 	computedFields,
 }));
@@ -64,7 +84,7 @@ export const Page = defineDocumentType(() => ({
 
 export default makeSource({
 	contentDirPath: "./content",
-	documentTypes: [Page, Project],
+	documentTypes: [Page, Project, Skill],
 	mdx: {
 		remarkPlugins: [remarkGfm],
 		rehypePlugins: [
