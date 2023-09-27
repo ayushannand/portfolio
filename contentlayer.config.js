@@ -66,6 +66,52 @@ export const Skill = defineDocumentType(() => ({
 	computedFields,
 }));
 
+
+
+export const Recommendation = defineDocumentType(() => ({
+	name: "Recommendation",
+	filePathPattern: "./recommendation/**/*.mdx",
+	contentType: "mdx",
+
+	fields: {
+		title: {
+			type: "string",
+			required: true,
+		},
+		description: {
+			type: "string",
+		},
+		name: {
+			type: "string",
+		},
+		link: {
+			type: "string",
+			required: true,
+		},
+		src: {
+			type: "string",
+			required: true,
+		},
+		role: {
+			type: "string",
+		},
+		relation: {
+			type: "string",
+		},
+		date: {
+			type: "string",
+		},
+		company: {
+			type: "string",
+		},
+		short_description: {
+			type: "string",
+		},
+	},
+	computedFields,
+}));
+
+
 export const Page = defineDocumentType(() => ({
 	name: "Page",
 	filePathPattern: "pages/**/*.mdx",
@@ -84,7 +130,7 @@ export const Page = defineDocumentType(() => ({
 
 export default makeSource({
 	contentDirPath: "./content",
-	documentTypes: [Page, Project, Skill],
+	documentTypes: [Page, Project, Skill, Recommendation],
 	mdx: {
 		remarkPlugins: [remarkGfm],
 		rehypePlugins: [
