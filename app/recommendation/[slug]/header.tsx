@@ -107,7 +107,7 @@ export const Header: React.FC<Props> = ({ recommendation }) => {
 						{recommendation.description}
 					</p>
 
-					<Link href={recommendation.link}>
+					<Link href={recommendation.link} target="_blank">
 						<div className="w-full justify-center flex p-4 text-xl font-bold cursor-pointer">
 							<p className="text-zinc-200 hover:text-zinc-50  flex flex-row items-center">
 								<p>View {recommendation.name}'s LinkedIn Profile</p> <Linkedin className="mx-2" size={20} /> <span aria-hidden="true">&rarr;</span>

@@ -123,7 +123,7 @@ export default async function ProjectsPage() {
 				</div>
 				<div className="hidden w-full h-px md:block bg-zinc-800" />
 
-				<div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
+				{/* <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
 					<div className="grid grid-cols-1 gap-4">
 						{sorted
 							.filter((_, i) => i % 3 === 0)
@@ -151,7 +151,8 @@ export default async function ProjectsPage() {
 								</Card>
 							))}
 					</div>
-				</div>
+				</div> */}
+
 			</div>
 		</div>
 	);
