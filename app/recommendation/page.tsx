@@ -109,7 +109,7 @@ export default async function ProjectsPage() {
 
 								</span>
 								<p className="my-4 mb-8 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-									{featured.short_description}
+									{featured2.short_description}
 								</p>
 								<div className="absolute bottom-4 md:bottom-8">
 									<p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
