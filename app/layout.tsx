@@ -3,17 +3,19 @@ import { Inter } from "@next/font/google";
 import LocalFont from "@next/font/local";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
+import TargetCursor from "./components/target-cursor";
+import ClickSpark from "./components/click-spark";
 
 export const metadata: Metadata = {
 	title: {
 		default: "ayushannand",
 		template: "%s | ayushannand",
 	},
-	description: "Upocming Software engineer at adobe.com",
+	description: "Software Engineer at Adobe building AI-powered systems. Published researcher at IWSLT/ACL 2024. Creator of AI Cockpit - sales enablement platform.",
 	openGraph: {
 		title: "ayushannand",
 		description:
-			"Upcoming Software engineer at adobe.com",
+			"Software Engineer at Adobe building AI-powered systems. Published researcher at IWSLT/ACL 2024.",
 		url: "https://linkedin.com/in/ayushannand",
 		siteName: "ayushannand",
 		images: [
@@ -70,7 +72,17 @@ export default function RootLayout({
 					process.env.NODE_ENV === "development" ? "debug-screens" : undefined
 				}`}
 			>
-				{children}
+				<TargetCursor />
+				<ClickSpark 
+					sparkColor="#ffffff" 
+					sparkSize={12} 
+					sparkRadius={20} 
+					sparkCount={8} 
+					duration={500}
+					extraScale={1.2}
+				>
+					{children}
+				</ClickSpark>
 			</body>
 		</html>
 	);

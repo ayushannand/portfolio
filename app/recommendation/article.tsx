@@ -8,7 +8,7 @@ type Props = {
 
 export const Article: React.FC<Props> = ({ recommendation }) => {
 	return (
-		<Link href={`/recommendation/${recommendation.slug}`}>
+		<Link href={`/recommendation/${recommendation.slug}`} className="cursor-target">
 			<article className="p-4 md:p-8">
 				<div className="flex justify-between gap-2 items-center">
 					

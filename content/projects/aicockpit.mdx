@@ -1,0 +1,550 @@
+---
+title: AI Cockpit
+description: Leading development of an AI-powered sales enablement platform at Adobe that combines real-time coaching, pitch analysis, customer simulations, and decision-support tools to boost sales team productivity.
+date: "2024-07-01"
+published: true
+repository: adobe/aicockpit
+---
+
+## Executive Summary
+
+**AI Cockpit** is a comprehensive AI-powered training and evaluation platform designed for customer service and sales teams. The platform leverages cutting-edge AI technologies including Azure OpenAI, Azure Cognitive Services, and multi-agent evaluation systems to provide immersive, realistic training experiences with intelligent feedback and detailed assessment.
+
+**Tech Stack:** Python (Flask), React, MySQL, Azure OpenAI, Azure Speech Services, WebSocket, CrewAI Multi-Agent System
+
+---
+
+## 🎯 Project Overview
+
+AI Cockpit serves as an advanced training platform that enables customer service and sales representatives to practice real-world scenarios in a safe, AI-powered environment. The platform provides immediate feedback, detailed evaluations, and actionable insights to improve performance.
+
+### Key Achievements
+
+- **Scalable Architecture** handling multiple concurrent training sessions
+- **Multi-Agent Evaluation System** providing multi-dimensional assessment
+- **Real-time Conversational AI** with streaming responses
+- **Comprehensive Analytics** for training effectiveness tracking
+
+---
+
+## 🚀 Core Features
+
+### 1. Realistic AI-Powered Conversations
+
+Built a sophisticated conversation management system with dynamic AI customer personas that simulate real customer interactions with context-aware responses.
+
+**Technical Implementation:**
+- Per-client context isolation for concurrent sessions
+- Message history management with configurable limits
+- Dynamic system prompt injection
+- Streaming responses for reduced latency
+- Real-time UI updates via WebSocket
+
+```python
+def handleUserQuery(user_query, client_id, speaker=True):
+    """Generator function for streaming AI responses"""
+    context = client_contexts[client_id]
+    
+    for chunk in azure_openai.chat.completions.create(
+        model=deployment_name,
+        messages=context['messages'],
+        stream=True
+    ):
+        if chunk.choices[0].delta.content:
+            yield chunk.choices[0].delta.content
+```
+
+### 2. Multi-Modal Interaction
+
+Implemented comprehensive interaction capabilities:
+
+- **Text Chat Interface** with real-time messaging
+- **Speech-to-Text** using Azure Cognitive Services
+- **Text-to-Speech** with SSML support for natural voice
+- **Interactive Avatar** integration via WebRTC
+- **Audio Queueing** and playback management
+- **Multi-language Support**
+
+### 3. Agentic Multi-Agent Evaluation System
+
+Designed and implemented a sophisticated multi-agent evaluation system using **CrewAI** that provides comprehensive, multi-dimensional assessments.
+
+**Architecture:**
+
+```
+┌─────────────────────────────────────────────────┐
+│         Evaluation Orchestrator                  │
+└────────┬────────────────────────────────────────┘
+         │
+    ┌────┴────┬──────────┬──────────┬─────────┐
+    ▼         ▼          ▼          ▼         ▼
+┌──────┐ ┌────────┐ ┌─────────┐ ┌──────┐ ┌──────┐
+│ Comm │ │Process│ │Support  │ │Sales │ │Manager│
+│Skills│ │Policy │ │Specialist│ │Spec. │ │Agent  │
+└──────┘ └────────┘ └─────────┘ └──────┘ └──────┘
+   │         │          │          │         │
+   └─────────┴──────────┴──────────┴─────────┘
+                     │
+                     ▼
+          Aggregated Evaluation Report
+```
+
+**Key Features:**
+- Dynamic agent creation based on scenario requirements
+- Parallel evaluation across multiple skill dimensions
+- Structured output validation using Pydantic models
+- Guardrails for output quality assurance
+- Executive summary generation by manager agent
+- Critical failure detection
+- Timestamp-aware feedback
+
+**Implementation Highlights:**
+```python
+# Dynamic model generation for flexible evaluation criteria
+def get_dynamic_model_for_task(agent_name, sub_parameters, scoring_rubric):
+    """Creates Pydantic models on-the-fly based on agent configuration"""
+    # Generates structured output models with validation
+    
+# Agent orchestration with task dependencies
+crew = Crew(
+    agents=[specialist_agents + [manager_agent]],
+    tasks=[specialist_tasks + [manager_task]],
+    process=Process.sequential,
+    verbose=True
+)
+```
+
+### 4. Comprehensive Analytics Dashboard
+
+Built a full-featured admin portal with:
+
+**User Management:**
+- Role-based access control (User, Admin, SuperAdmin, UserManager)
+- Batch user operations and assignment management
+
+**Performance Tracking:**
+- Usage statistics and session analysis
+- Performance metrics across multiple dimensions
+- Historical trend analysis
+- User progress monitoring
+- Detailed scoring breakdowns
+
+**Scenario Management:**
+- CRUD operations for training scenarios
+- Folder organization and visibility controls
+- Version tracking with comprehensive changelog
+
+---
+
+## 🏗️ Technical Architecture
+
+### High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Frontend (React)                         │
+│  • Material-UI Components  • Real-time WebSocket            │
+│  • Rich Text Editors       • Audio/Video Integration        │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  Backend (Flask + SocketIO)                  │
+│  • RESTful APIs          • WebSocket Handlers               │
+│  • Session Management    • Authentication & Authorization   │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+        ┌─────────────┼─────────────┐
+        ▼             ▼             ▼
+┌──────────────┐ ┌──────────┐ ┌────────────────────┐
+│ Azure OpenAI │ │  MySQL   │ │ Azure Speech       │
+│   GPT-4/3.5  │ │ Database │ │ Services (TTS/STT) │
+└──────────────┘ └──────────┘ └────────────────────┘
+```
+
+### Technology Stack
+
+**Backend:**
+- **Framework:** Flask 3.x with Flask-SocketIO for real-time communication
+- **Language:** Python 3.12+
+- **Database:** MySQL 8.0+ with connection pooling and optimized indexing
+- **AI Integration:**
+  - Azure OpenAI (GPT-4, GPT-3.5-turbo)
+  - Azure Cognitive Services Speech SDK
+  - CrewAI for multi-agent orchestration
+- **Authentication:** Token-based authentication with RBAC
+- **Logging:** Structured logging with CloudWatch/Splunk integration
+
+**Frontend:**
+- **Framework:** React 18.x
+- **UI Library:** Material-UI (MUI) 6.x
+- **State Management:** React Context API and hooks
+- **Rich Text:** TipTap, MDX Editor for scenario creation
+- **Real-time:** Socket.io-client for WebSocket communication
+- **Charts:** Recharts, MUI X-Charts for analytics visualization
+- **Routing:** React Router v7
+
+**Infrastructure:**
+- **Cloud:** Azure (OpenAI, Cognitive Services)
+- **Deployment:** Docker, Azure App Service, AWS ECS (multi-cloud)
+- **Monitoring:** Application Insights, CloudWatch
+
+### Modular Backend Structure
+
+```
+app/
+├── functions/           # Business logic
+│   ├── handleUserQuery.py    # AI conversation handling
+│   ├── evaluateChat.py       # Legacy evaluation
+│   └── chat_context.py       # Context management
+├── services/            # Service layer
+│   ├── evaluation_router.py  # Evaluation routing
+│   └── agentic_evaluation_service.py
+├── routes/              # RESTful API endpoints
+├── models/              # Data models and database operations
+├── middleware/          # Authentication & authorization
+├── helpers/             # Utility functions
+└── agenticEvaluation/   # Multi-agent evaluation module
+    ├── orchestrator.py
+    ├── crew_agent.py
+    ├── model_factory.py
+    ├── guardrails.py
+    └── constants.py
+```
+
+### Design Patterns Implemented
+
+- **Factory Pattern:** Dynamic agent and model creation
+- **Strategy Pattern:** Evaluation routing between legacy/agentic systems
+- **Decorator Pattern:** Authentication, logging, error handling
+- **Observer Pattern:** WebSocket event handling
+- **Singleton Pattern:** Database connections, LLM clients
+
+---
+
+## 💡 Key Technical Achievements
+
+### 1. Intelligent Evaluation Routing
+
+Implemented a flexible evaluation system with dual modes:
+
+**Routing Logic:**
+```python
+def route_evaluation(client_id, scenario_id, username, transcript, context):
+    """Intelligently routes between evaluation systems"""
+    agents = get_agents_for_scenario(scenario_id)
+    
+    if agents and len(agents) > 0:
+        return run_agentic_evaluation(...)  # Multi-agent system
+    else:
+        return run_legacy_evaluation(...)    # Single LLM call
+```
+
+**Features:**
+- Customizable evaluation criteria per scenario
+- Timestamp-aware feedback correlation
+- Sub-parameter breakdown for detailed insights
+- Scoring rubrics with configurable thresholds
+- Historical evaluation tracking and comparison
+
+### 2. Real-Time Context Management
+
+Built a sophisticated session management system:
+
+**Resource Management:**
+```python
+class ResourceManager:
+    """Manages client resources and cleanup"""
+    
+    def cleanup_inactive_clients(self, timeout_minutes=30):
+        """Removes inactive client contexts"""
+        # Activity tracking
+        # Resource deallocation
+        # Logging and metrics
+```
+
+**Features:**
+- Client context lifecycle management
+- Automatic cleanup of inactive sessions
+- Connection pooling for database operations
+- Memory-efficient message storage
+- Per-client activity tracking
+
+### 3. Performance Optimizations
+
+**Database Optimization:**
+```python
+engine = create_engine(
+    'mysql+pymysql://...',
+    pool_size=20,
+    max_overflow=0,
+    pool_pre_ping=True
+)
+```
+
+- Strategic indexing on frequently queried columns
+- Batch operations for bulk inserts/updates
+- Lazy loading for large datasets
+- Query optimization and caching
+
+**Frontend Optimization:**
+- Code splitting with React.lazy()
+- Memoization for expensive computations
+- Virtual scrolling for large lists
+- Bundle optimization (tree shaking, minification)
+
+### 4. Security Implementation
+
+**Authentication & Authorization:**
+- Token-based authentication with secure storage
+- Role-based access control (RBAC)
+- Session management with timeout
+- Audit logging for compliance
+
+**Data Security:**
+- Input validation and sanitization
+- SQL injection prevention (parameterized queries)
+- XSS and CSRF protection
+- Secure environment variable management
+- Data encryption in transit (TLS/SSL)
+
+---
+
+## 📊 Database Architecture
+
+### Core Tables (15+ tables)
+
+**User Management:**
+- `aicockpit_allowed_users` - Authorized users with roles
+- `aicockpit_user_assignments` - Scenario assignments per user
+
+**Session & Chat:**
+- `aicockpit_sessions` - Training session metadata
+- `aicockpit_chats` - Conversation message history
+
+**Scenarios:**
+- `aicockpit_scenarios` - Training scenarios and configurations
+- `aicockpit_agent_prompts` - Agent persona definitions
+- `aicockpit_product_context` - Product information
+- `aicockpit_scenario_changelog` - Version history
+
+**Evaluation:**
+- `aicockpit_evaluations` - Legacy evaluation results
+- `aicockpit_agentic_evaluations` - Multi-agent evaluation results
+- `aicockpit_evaluation_agents` - Agent configurations
+- `aicockpit_scenario_agent_assignments` - Agent-scenario mappings
+
+---
+
+## 🎨 Frontend Highlights
+
+### Rich Text Editing
+- **TipTap Editor** for markdown-based scenario creation
+- Real-time preview with live rendering
+- Custom toolbar with context-aware formatting
+
+### Data Visualization
+- **Interactive Charts** for usage trends and performance metrics
+- **MUI X-DataGrid** with sorting, filtering, pagination
+- **Export Functionality** (CSV, Excel) for analytics
+
+### Real-Time Features
+- **Live Chat** with WebSocket-based messaging
+- **Typing Indicators** for real-time activity status
+- **Streaming Responses** with progressive text rendering
+
+### Responsive Design
+- Mobile-first responsive layouts
+- WCAG 2.1 accessibility compliance
+- Dark mode support with theme switching
+
+---
+
+## 📈 Project Impact
+
+### Business Value
+
+- **Reduced Training Costs** through automated scenario simulations
+- **Improved Training Effectiveness** with detailed, actionable feedback
+- **Scalable Solution** for enterprise training needs
+- **Data-Driven Insights** for training optimization
+
+### Technical Metrics
+
+- **300+** frontend components and pages
+- **50+** RESTful API endpoints
+- **15+** database tables with optimized indexes
+- **10,000+** lines of Python code
+- **15,000+** lines of JavaScript/React code
+- Handles **multiple concurrent** training sessions
+- **Sub-100ms** response time for most operations
+
+### Performance
+
+- Real-time streaming with minimal latency
+- Efficient resource utilization
+- Scalable architecture supporting concurrent users
+- Responsive UI with optimized rendering
+
+---
+
+## 🧪 Quality Assurance
+
+### Testing Strategy
+
+**Backend Testing:**
+```python
+# Unit tests with pytest
+def test_handle_user_query_success(mock_client_context):
+    result = handleUserQuery("Hello", "test_client_id")
+    assert len(list(result)) > 0
+
+@pytest.mark.integration
+def test_evaluation_flow_end_to_end():
+    # Full evaluation pipeline test
+```
+
+**Frontend Testing:**
+```javascript
+// Component tests with Jest & React Testing Library
+describe('ChatMessage', () => {
+    it('renders message content correctly', () => {
+        render(<ChatMessage message="Hello" />);
+        expect(screen.getByText('Hello')).toBeInTheDocument();
+    });
+});
+```
+
+### Code Quality
+- **Backend:** Black (formatting), Flake8 (linting), MyPy (type checking)
+- **Frontend:** ESLint, Prettier
+- **Git Hooks:** Pre-commit hooks for code quality
+- **CI/CD:** Automated testing on pull requests
+
+---
+
+## 🚀 Deployment
+
+### Multi-Cloud Deployment
+
+**Docker Deployment:**
+```yaml
+version: '3.8'
+services:
+  backend:
+    build: ./app
+    ports: ["5000:5000"]
+  frontend:
+    build: ./frontend
+    ports: ["3000:3000"]
+  database:
+    image: mysql:8.0
+```
+
+**Cloud Options:**
+- Azure App Service (Backend)
+- Azure Static Web Apps (Frontend)
+- Azure Database for MySQL
+- Alternative: AWS ECS, AWS RDS
+
+### CI/CD Pipeline
+- Automated testing on commits
+- Docker image building and registry push
+- Staged deployments (dev → staging → production)
+- Rollback capabilities for quick recovery
+
+---
+
+## 📖 Documentation
+
+### Comprehensive Documentation Suite
+
+- **API Reference Guide** with endpoint specifications
+- **Deployment Guide** for multi-cloud setup
+- **Development Guide** for onboarding new engineers
+- **Database Schema Documentation** with ER diagrams
+- **Agentic Evaluation Architecture** deep-dive
+- **User Manual** (Admin & End User versions)
+- **Architecture Decision Records** (ADRs)
+
+### Code Quality Standards
+- Comprehensive inline documentation
+- Type hints for all Python functions
+- JSDoc comments for JavaScript/React
+- README files for each major module
+
+---
+
+## 🎓 Technical Skills Demonstrated
+
+### Full-Stack Development
+- **Backend:** RESTful API design, WebSocket implementation, async programming
+- **Frontend:** React ecosystem, component architecture, state management
+- **Database:** Schema design, query optimization, indexing strategies
+
+### AI/ML Integration
+- **Azure OpenAI** integration and prompt engineering
+- **Multi-Agent Systems** with CrewAI orchestration
+- **Natural Language Processing** for conversation management
+- **Speech Recognition/Synthesis** with Azure Cognitive Services
+
+### Software Engineering
+- Clean architecture and SOLID principles
+- Design patterns implementation
+- Comprehensive testing strategies
+- Documentation and knowledge sharing
+- Version control and Git workflow
+
+### DevOps & Cloud
+- Docker containerization
+- Multi-cloud deployment (Azure, AWS)
+- CI/CD pipeline setup
+- Monitoring, logging, and observability
+- Database administration and optimization
+
+---
+
+## 🔮 Future Enhancements
+
+### Planned Features
+
+1. **Advanced Analytics**
+   - Predictive performance analytics using ML models
+   - Personalized training recommendations
+   - Cohort analysis and benchmarking
+
+2. **Enhanced AI Capabilities**
+   - Multi-modal AI (vision + language)
+   - Emotion detection and sentiment analysis
+   - Real-time coaching suggestions during conversations
+
+3. **Scalability Improvements**
+   - Microservices architecture migration
+   - Kubernetes orchestration
+   - Auto-scaling infrastructure
+
+4. **Integration Ecosystem**
+   - Third-party LMS integration
+   - Public API marketplace
+   - Webhook support for external systems
+
+---
+
+## 💎 Key Takeaways
+
+AI Cockpit represents a comprehensive full-stack application that combines modern web technologies with cutting-edge AI capabilities. The project demonstrates:
+
+- ✅ **Full-Stack Expertise:** Python/Flask backend + React frontend
+- ✅ **AI Integration:** Advanced LLM usage, multi-agent systems
+- ✅ **System Design:** Scalable, maintainable architecture
+- ✅ **DevOps:** Cloud deployment, monitoring, CI/CD
+- ✅ **Software Engineering:** Clean code, testing, documentation
+
+The platform serves as a testament to the ability to design, implement, and deploy complex enterprise-grade applications that solve real-world problems through intelligent automation and user-centric design.
+
+---
+
+**Project Timeline:** July 2024 - Present  
+**Role:** Lead Developer & Architect  
+**Team Size:** Cross-functional team of 5-8 engineers  
+**Status:** Production deployment serving multiple training programs

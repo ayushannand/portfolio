@@ -65,7 +65,7 @@ const components = {
 	a: ({ className, ...props }) => (
 		<Link
 			className={clsx(
-				"font-medium text-zinc-900 underline underline-offset-4",
+				"cursor-target font-medium text-zinc-900 underline underline-offset-4 hover:text-zinc-700 transition-colors",
 				className,
 			)}
 			{...props}

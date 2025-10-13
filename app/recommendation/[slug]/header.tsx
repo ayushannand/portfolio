@@ -48,7 +48,7 @@ export const Header: React.FC<Props> = ({ recommendation }) => {
 				<div className="container flex flex-row-reverse items-center justify-between p-6 mx-auto">
 					<div className="flex justify-between gap-8">
 
-						<Link target="_blank" href="https://linkedin.com/in/ayushannand">
+						<Link target="_blank" href="https://linkedin.com/in/ayushannand" className="cursor-target">
 							<Linkedin
 								className={`w-6 h-6 duration-200 hover:font-medium ${isIntersecting
 										? " text-zinc-400 hover:text-zinc-100"
@@ -56,7 +56,7 @@ export const Header: React.FC<Props> = ({ recommendation }) => {
 									} `}
 							/>
 						</Link>
-						<Link target="_blank" href="https://github.com/ayushannand">
+						<Link target="_blank" href="https://github.com/ayushannand" className="cursor-target">
 							<Github
 								className={`w-6 h-6 duration-200 hover:font-medium ${isIntersecting
 										? " text-zinc-400 hover:text-zinc-100"
@@ -68,7 +68,7 @@ export const Header: React.FC<Props> = ({ recommendation }) => {
 
 					<Link
 						href="/recommendation"
-						className={`duration-200 hover:font-medium ${isIntersecting
+						className={`cursor-target duration-200 hover:font-medium ${isIntersecting
 								? " text-zinc-400 hover:text-zinc-100"
 								: "text-zinc-600 hover:text-zinc-900"
 							} `}
@@ -107,7 +107,7 @@ export const Header: React.FC<Props> = ({ recommendation }) => {
 						{recommendation.description}
 					</p>
 
-					<Link href={recommendation.link} target="_blank">
+					<Link href={recommendation.link} target="_blank" className="cursor-target">
 						<div className="w-full justify-center flex p-4 text-xl font-bold cursor-pointer">
 							<p className="text-zinc-200 hover:text-zinc-50  flex flex-row items-center">
 								<p>View {recommendation.name}'s LinkedIn Profile</p> <Linkedin className="mx-2" size={20} /> <span aria-hidden="true">&rarr;</span>

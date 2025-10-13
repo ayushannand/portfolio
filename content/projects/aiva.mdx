@@ -1,0 +1,93 @@
+---
+title: AIVA - AI Virtual Assistant
+description: Built during my Adobe internship, AIVA is an NLP-powered system that converts natural language queries into database operations and surfaces results through an intuitive interface. Foundation for AI Cockpit.
+date: "2023-07-01"
+published: true
+repository: ayushannand/AIVA
+---
+
+## Overview
+
+**AIVA (Agent Intelligent Virtual Assistant)** was my flagship project during my Adobe internship. It demonstrated the power of conversational AI for enterprise data access, eliminating the need for users to know SQL or complex query languages.
+
+## What It Does
+
+AIVA bridges the gap between business users and complex databases through natural language:
+- Users ask questions in plain English
+- AIVA parses the intent using NLP
+- Generates appropriate SQL queries
+- Executes against the database
+- Presents results in an intuitive, visual format
+
+## Technical Architecture
+
+### NLP Pipeline
+```
+User Query → Intent Classification → Entity Extraction → Query Generation → Execution → Results Formatting
+```
+
+### Components Built
+
+**1. Natural Language Understanding**
+- Intent recognition using transformer models
+- Named entity recognition for database fields
+- Context management for follow-up questions
+
+**2. Query Generation Engine**
+- Semantic mapping to database schema
+- SQL query construction and validation
+- Query optimization for performance
+
+**3. Database Integration**
+- Multi-database support (PostgreSQL, MySQL)
+- Connection pooling and transaction management
+- Security layer for query sanitization
+
+**4. Frontend Interface**
+- Conversational UI with chat-like interaction
+- Data visualization (tables, charts, graphs)
+- Query history and favorites
+- Export functionality
+
+## Technical Stack
+
+- **Backend**: Python, Flask
+- **NLP**: Transformers, spaCy, NLTK
+- **Database**: SQL (PostgreSQL, MySQL)
+- **Frontend**: React.js, Chart.js
+- **API**: RESTful architecture
+
+## Key Achievements
+
+- **95%+ Accuracy** in intent classification for business queries
+- **Sub-second Response Time** for most query patterns
+- **Zero SQL Knowledge Required** for end users
+- **Secure by Design** with query sanitization and role-based access
+
+## Example Queries
+
+```
+"Show me top 5 customers by revenue last quarter"
+→ SELECT customer_name, SUM(revenue) FROM sales 
+   WHERE date >= '2023-04-01' AND date < '2023-07-01' 
+   GROUP BY customer_name ORDER BY SUM(revenue) DESC LIMIT 5
+
+"What's the average deal size this year?"
+→ SELECT AVG(deal_value) FROM deals WHERE YEAR(date) = 2023
+
+"Compare Q1 and Q2 sales performance"
+→ [Complex multi-query analysis with comparative visualization]
+```
+
+## From AIVA to AI Cockpit
+
+The success of AIVA demonstrated the value of AI-powered interfaces for complex data tasks. This led directly to my full-time role where I'm building **AI Cockpit** — expanding on AIVA's foundation with:
+- Real-time coaching and feedback
+- Multi-modal AI capabilities
+- Simulation and scenario planning
+- Advanced personalization
+
+---
+
+AIVA proved that well-designed AI can make powerful tools accessible to everyone, regardless of technical expertise.
+

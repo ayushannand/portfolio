@@ -9,14 +9,40 @@ import { Linkedin } from "lucide-react";
 
 export default async function ProjectsPage() {
 
-	const featured = allRecommendations.find((r) => r.slug === "dinesh")!;
-	const featured2 = allRecommendations.find((r) => r.slug === "datta")!;
+	const featured = allRecommendations.find((r) => r.slug === "dinesh");
+	const featured2 = allRecommendations.find((r) => r.slug === "datta");
+	const featured3 = allRecommendations.find((r) => r.slug === "niyati");
+	
+	// Fallback to other recommendations if featured ones aren't found
+	const featuredRec = featured || allRecommendations[0];
+	const featured2Rec = featured2 || allRecommendations[1];
+	const featured3Rec = featured3 || allRecommendations[2];
+	
 	const sorted = allRecommendations
 		.filter(
 			(project) =>
-				project.slug !== featured.slug &&
-				project.slug !== featured2.slug,
+				project.slug !== featuredRec?.slug &&
+				project.slug !== featured2Rec?.slug &&
+				project.slug !== featured3Rec?.slug,
 		);
+
+	if (!featuredRec) {
+		return (
+			<div className="relative pb-16">
+				<Navigation />
+				<div className="px-6 pt-16 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
+					<div className="max-w-2xl mx-auto lg:mx-0">
+						<h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
+							Recommendations
+						</h2>
+						<p className="mt-4 text-zinc-400">
+							Loading recommendations...
+						</p>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="relative pb-16">
@@ -34,30 +60,30 @@ export default async function ProjectsPage() {
 
 				<div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
 					<Card>
-						<Link href={`/recommendation/${featured.slug}`}>
+						<Link href={`/recommendation/${featuredRec.slug}`} className="cursor-target">
 							<article className="relative w-full h-full p-4 md:p-8">
 								<h2
 									id="featured-post"
 									className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display"
 								>
-									{featured.title}
+									{featuredRec.title}
 								</h2>
 								<span className="m-4 flex flex-row font-bold text-zinc-100 group-hover:text-white text-[18px] font-display">
 									<div className="mr-3">
-										<Image src={featured.src}
+										<Image src={featuredRec.src}
 											alt="Profile"
 											width={50} // Set the desired width
 											height={50} // Set the desired height
 											style={{ borderRadius: '50px' }}
 										/></div>
 									<div className="flex flex-col">
-									<Link href={featured.link}>
+									<Link href={featuredRec.link} className="cursor-target">
 										<div className="flex flex-row align-bottom items-center">
-											<div className="hover:underline">{featured.name}</div>
+											<div className="hover:underline">{featuredRec.name}</div>
 												<Linkedin className="mx-2" size={20} />
 										</div>
 										</Link>
-										<div className="font-[300] text-[14px]">{featured.role}</div>
+										<div className="font-[300] text-[14px]">{featuredRec.role}</div>
 									</div>
 									<div>
 
@@ -65,7 +91,7 @@ export default async function ProjectsPage() {
 
 								</span>
 								<p className="my-4 mb-8 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-									{featured.short_description}
+									{featuredRec.short_description}
 								</p>
 								<div className="absolute bottom-4 md:bottom-8">
 									<p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
@@ -77,31 +103,32 @@ export default async function ProjectsPage() {
 					</Card>
 
 					<div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
+					{featured2Rec && (
 					<Card>
-						<Link href={`/recommendation/${featured2.slug}`}>
+						<Link href={`/recommendation/${featured2Rec.slug}`} className="cursor-target">
 							<article className="relative w-full h-full p-4 md:p-8">
 								<h2
 									id="featured2-post"
 									className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display"
 								>
-									{featured2.title}
+									{featured2Rec.title}
 								</h2>
 								<span className="m-4 flex flex-row font-bold text-zinc-100 group-hover:text-white text-[18px] font-display">
 									<div className="mr-3">
-										<Image src={featured2.src}
+										<Image src={featured2Rec.src}
 											alt="Profile"
 											width={50} // Set the desired width
 											height={50} // Set the desired height
 											style={{ borderRadius: '50px' }}
 										/></div>
 									<div className="flex flex-col">
-									<Link href={featured2.link}>
+									<Link href={featured2Rec.link} className="cursor-target">
 										<div className="flex flex-row align-bottom items-center">
-											<div className="hover:underline">{featured2.name}</div>
+											<div className="hover:underline">{featured2Rec.name}</div>
 												<Linkedin className="mx-2" size={20} />
 										</div>
 										</Link>
-										<div className="font-[300] text-[14px]">{featured2.role}</div>
+										<div className="font-[300] text-[14px]">{featured2Rec.role}</div>
 									</div>
 									<div>
 
@@ -109,7 +136,7 @@ export default async function ProjectsPage() {
 
 								</span>
 								<p className="my-4 mb-8 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-									{featured2.short_description}
+									{featured2Rec.short_description}
 								</p>
 								<div className="absolute bottom-4 md:bottom-8">
 									<p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
@@ -119,6 +146,52 @@ export default async function ProjectsPage() {
 							</article>
 						</Link>
 					</Card>
+					)}
+
+					{featured3Rec && (
+					<Card>
+						<Link href={`/recommendation/${featured3Rec.slug}`} className="cursor-target">
+							<article className="relative w-full h-full p-4 md:p-8">
+								<h2
+									id="featured3-post"
+									className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display"
+								>
+									{featured3Rec.title}
+								</h2>
+								<span className="m-4 flex flex-row font-bold text-zinc-100 group-hover:text-white text-[18px] font-display">
+									<div className="mr-3">
+										<Image src={featured3Rec.src}
+											alt="Profile"
+											width={50} // Set the desired width
+											height={50} // Set the desired height
+											style={{ borderRadius: '50px' }}
+										/></div>
+									<div className="flex flex-col">
+									<Link href={featured3Rec.link} className="cursor-target">
+										<div className="flex flex-row align-bottom items-center">
+											<div className="hover:underline">{featured3Rec.name}</div>
+												<Linkedin className="mx-2" size={20} />
+										</div>
+										</Link>
+										<div className="font-[300] text-[14px]">{featured3Rec.role}</div>
+									</div>
+									<div>
+
+									</div>
+
+								</span>
+								<p className="my-4 mb-8 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
+									{featured3Rec.short_description}
+								</p>
+								<div className="absolute bottom-4 md:bottom-8">
+									<p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
+										Read more <span aria-hidden="true">&rarr;</span>
+									</p>
+								</div>
+							</article>
+						</Link>
+					</Card>
+					)}
 					</div>
 				</div>
 				<div className="hidden w-full h-px md:block bg-zinc-800" />

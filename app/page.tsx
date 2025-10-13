@@ -18,7 +18,7 @@ export default function Home() {
 						<Link
 							key={item.href}
 							href={item.href}
-							className="text-sm duration-500 text-zinc-500 hover:text-zinc-300"
+							className="cursor-target text-sm duration-500 text-zinc-500 hover:text-zinc-300"
 						>
 							{item.name}
 						</Link>
@@ -30,35 +30,45 @@ export default function Home() {
 				className="absolute inset-0 -z-10 animate-fade-in"
 				quantity={1000}
 			/>
-			<h1 className="z-10 text-4xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-9xl whitespace-nowrap bg-clip-text ">
+			<h1 className="cursor-target z-10 text-4xl text-transparent duration-1000 bg-white text-edge-outline animate-title font-display sm:text-6xl md:text-9xl whitespace-nowrap bg-clip-text ">
 				ayushannand
 			</h1>
 
 			<div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
 			<div className="my-16 text-center animate-fade-in">
 				<h2 className="text-sm text-zinc-500 ">
-					Hi, my name is Ayush Anand. I'm an undergoing IT undergraduate from {" "}
-					<p className="underline duration-500 hover:text-zinc-300 cursor-default">
-						National Institue of Technology, Kurukshetra
-					</p>
-					{/* <br /> */}
-					I have interned at {" "}
-					<Link
-						target="_blank"
-						href="https://byjus.com/"
-						className="underline duration-500 hover:text-zinc-300"
-					>
-						Byju's
-					</Link>{" "}
-					and {" "} 
+					Hi, I'm <span className="cursor-target">Ayush Anand</span> — a{" "}
 					<Link
 						target="_blank"
 						href="https://www.adobe.com/"
-						className="underline duration-500 hover:text-zinc-300"
+						className="cursor-target underline duration-500 hover:text-zinc-300"
 					>
-						Adobe
+						Software Engineer at Adobe
 					</Link>
-					<p> </p>as a software developer.
+					{" "}building intelligent, AI-powered systems.
+					<br />
+					<br />
+					I lead development of{" "}
+					<span className="cursor-target text-zinc-400 font-semibold">AI Cockpit</span>
+					{" "}— an AI sales enablement platform combining real-time coaching, scenario simulations, and decision-support tools.
+					<br />
+					<br />
+					B.Tech in IT from{" "}
+					<Link
+						target="_blank"
+						href="https://nitkkr.ac.in/"
+						className="cursor-target underline duration-500 hover:text-zinc-300"
+					>
+						National Institute of Technology, Kurukshetra
+					</Link>
+					{" "}• Published researcher at{" "}
+					<Link
+						target="_blank"
+						href="https://aclanthology.org/2024.iwslt-1.37"
+						className="cursor-target underline duration-500 hover:text-zinc-300"
+					>
+						IWSLT/ACL 2024
+					</Link>
 				</h2>
 			</div>
 		</div>

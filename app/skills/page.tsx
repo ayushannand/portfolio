@@ -7,21 +7,47 @@ import { Article } from "./article";
 import { Redis } from "@upstash/redis";
 import { Eye } from "lucide-react";
 
-const redis = Redis.fromEnv();
+const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN 
+	? Redis.fromEnv() 
+	: null;
 
 export const revalidate = 60;
 export default async function SkillsPage() {
 
-	const featured = allSkills.find((skill) => skill.title === "Langchain")!;
-	const top2 = allSkills.find((skill) => skill.title === "Figma")!;
-	const top3 = allSkills.find((skill) => skill.title === "NextJS")!;
+	const featured = allSkills.find((skill) => skill.title === "NLP & AI/ML");
+	const top2 = allSkills.find((skill) => skill.title === "Python");
+	const top3 = allSkills.find((skill) => skill.title === "React.js");
+	
+	// Fallback to other skills if featured ones aren't found
+	const featuredSkill = featured || allSkills[0];
+	const top2Skill = top2 || allSkills[1];
+	const top3Skill = top3 || allSkills[2];
+	
 	const sorted = allSkills
 		.filter(
 			(skill) =>
-				skill.title !== featured.title &&
-				skill.title !== top2.title &&
-				skill.title !== top3.title,
+				skill.title !== featuredSkill?.title &&
+				skill.title !== top2Skill?.title &&
+				skill.title !== top3Skill?.title,
 		);
+
+	if (!featuredSkill) {
+		return (
+			<div className="relative pb-16">
+				<Navigation />
+				<div className="px-6 pt-10 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-10 md:pt-16 lg:pt-32">
+					<div className="max-w-2xl mx-auto lg:mx-0">
+						<h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
+							Skills
+						</h2>
+						<p className="mt-4 text-zinc-400">
+							Loading skills...
+						</p>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="relative pb-16">
@@ -44,18 +70,18 @@ export default async function SkillsPage() {
 									id="featured-post"
 									className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display"
 								>
-									{featured.title}
+									{featuredSkill.title}
 								</h2>
 								<p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-									{featured.description}
+									{featuredSkill.description}
 								</p>
 							</article>
 					</Card>
 
 					<div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
-						{[top2, top3].map((skill) => (
-							<Card key={skill.slug}>
-								<Article skill={skill}  />
+						{[top2Skill, top3Skill].filter(Boolean).map((skill) => (
+							<Card key={skill!.slug}>
+								<Article skill={skill!}  />
 							</Card>
 						))}
 					</div>
