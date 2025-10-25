@@ -1,6 +1,6 @@
 import type { Skill } from "@/.contentlayer/generated";
 import Link from "next/link";
-import { Eye, View } from "lucide-react";
+import { Eye } from "lucide-react";
 
 type Props = {
 	skill: Skill;
