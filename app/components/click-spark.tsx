@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useCallback, ReactNode } from 'react';
+import { useRef, useEffect, useCallback, ReactNode, MouseEvent } from 'react';
 
 interface ClickSparkProps {
   sparkColor?: string;
@@ -13,6 +13,13 @@ interface ClickSparkProps {
   children: ReactNode;
 }
 
+interface Spark {
+  x: number;
+  y: number;
+  angle: number;
+  startTime: number;
+}
+
 const ClickSpark = ({
   sparkColor = '#fff',
   sparkSize = 10,
@@ -23,9 +30,9 @@ const ClickSpark = ({
   extraScale = 1.0,
   children
 }: ClickSparkProps) => {
-  const canvasRef = useRef(null);
-  const sparksRef = useRef([]);
-  const startTimeRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const sparksRef = useRef<Spark[]>([]);
+  const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,7 +41,7 @@ const ClickSpark = ({
     const parent = canvas.parentElement;
     if (!parent) return;
 
-    let resizeTimeout;
+    let resizeTimeout: NodeJS.Timeout;
 
     const resizeCanvas = () => {
       const { width, height } = parent.getBoundingClientRect();
@@ -61,7 +68,7 @@ const ClickSpark = ({
   }, []);
 
   const easeFunc = useCallback(
-    t => {
+    (t: number): number => {
       switch (easing) {
         case 'linear':
           return t;
@@ -80,10 +87,11 @@ const ClickSpark = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    let animationId;
+    let animationId: number;
 
-    const draw = timestamp => {
+    const draw = (timestamp: number) => {
       if (!startTimeRef.current) {
         startTimeRef.current = timestamp;
       }
@@ -126,7 +134,7 @@ const ClickSpark = ({
     };
   }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
 
-  const handleClick = e => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -134,7 +142,7 @@ const ClickSpark = ({
     const y = e.clientY - rect.top;
 
     const now = performance.now();
-    const newSparks = Array.from({ length: sparkCount }, (_, i) => ({
+    const newSparks: Spark[] = Array.from({ length: sparkCount }, (_, i) => ({
       x,
       y,
       angle: (2 * Math.PI * i) / sparkCount,
