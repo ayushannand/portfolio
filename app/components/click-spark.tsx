@@ -1,6 +1,17 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, ReactNode } from 'react';
+
+interface ClickSparkProps {
+  sparkColor?: string;
+  sparkSize?: number;
+  sparkRadius?: number;
+  sparkCount?: number;
+  duration?: number;
+  easing?: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+  extraScale?: number;
+  children: ReactNode;
+}
 
 const ClickSpark = ({
   sparkColor = '#fff',
@@ -11,7 +22,7 @@ const ClickSpark = ({
   easing = 'ease-out',
   extraScale = 1.0,
   children
-}) => {
+}: ClickSparkProps) => {
   const canvasRef = useRef(null);
   const sparksRef = useRef([]);
   const startTimeRef = useRef(null);
